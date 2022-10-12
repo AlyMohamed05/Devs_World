@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.ui.theme
+package com.silverbullet.devsworld.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
