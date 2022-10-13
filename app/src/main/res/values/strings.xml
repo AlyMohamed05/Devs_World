@@ -1,3 +1,11 @@
 <resources>
+
     <string name="app_name">Devs World</string>
+
+    <string name="login">Login</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="login_hint">Username / Email</string>
+    <string name="dont_have_account">Don\'t have account yet</string>
+    <string name="sign_up">Sign up!</string>
+
 </resources>
