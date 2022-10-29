@@ -15,8 +15,21 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private val _passwordText = mutableStateOf("")
     val passwordText: State<String> = _passwordText
 
-    fun onEvent(loginScreenEvent: LoginScreenEvent){
-        when(loginScreenEvent){
+    private val _showPassword = mutableStateOf(false)
+    val showPassword: State<Boolean> = _showPassword
+
+    private val _usernameError = mutableStateOf<String?>(null)
+    val usernameError: State<String?> = _usernameError
+
+    private val _passwordError = mutableStateOf<String?>(null)
+    val passwordError: State<String?> = _passwordError
+
+    fun setPasswordVisibility(showPassword: Boolean) {
+        _showPassword.value = showPassword
+    }
+
+    fun onEvent(loginScreenEvent: LoginScreenEvent) {
+        when (loginScreenEvent) {
 
             is LoginScreenEvent.UserNameFieldChanged -> {
                 _usernameText.value = loginScreenEvent.username

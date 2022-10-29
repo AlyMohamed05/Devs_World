@@ -1,6 +1,7 @@
 package com.silverbullet.devsworld.presentation.login
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ fun LoginScreen(
                 onValueChange = { username ->
                     viewModel.onEvent(LoginScreenEvent.UserNameFieldChanged(username))
                 },
+                error = viewModel.usernameError.value,
                 hint = stringResource(id = R.string.login_hint),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -52,10 +54,24 @@ fun LoginScreen(
                 onValueChange = { password ->
                     viewModel.onEvent(LoginScreenEvent.PasswordFieldChanged(password))
                 },
+                error = viewModel.passwordError.value,
+                showPassword = viewModel.showPassword.value,
+                setShowPasswordCallback = viewModel::setPasswordVisibility,
                 hint = stringResource(id = R.string.password_hint),
                 keyboardType = KeyboardType.Password,
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(PaddingMedium))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.End)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.login),
+                    color = MaterialTheme.colors.onPrimary
+                )
+            }
         }
         Text(
             text = buildAnnotatedString {
