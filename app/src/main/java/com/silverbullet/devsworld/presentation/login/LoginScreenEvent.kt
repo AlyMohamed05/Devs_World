@@ -6,4 +6,6 @@ sealed class LoginScreenEvent{
 
     class PasswordFieldChanged(val password: String): LoginScreenEvent()
 
+    class SetPasswordVisibility(val isVisible: Boolean): LoginScreenEvent()
+
 }

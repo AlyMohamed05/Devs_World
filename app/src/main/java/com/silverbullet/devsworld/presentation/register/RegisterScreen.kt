@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.presentation.login
+package com.silverbullet.devsworld.presentation.register
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,14 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.silverbullet.devsworld.R
-import com.silverbullet.devsworld.navigation.Screen
 import com.silverbullet.devsworld.presentation.components.StandardTextField
 import com.silverbullet.devsworld.presentation.ui.theme.PaddingMedium
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -35,18 +34,33 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.login),
+                text = stringResource(id = R.string.register),
                 color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.h1,
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.usernameText.value,
-                onValueChange = { username ->
-                    viewModel.onEvent(LoginScreenEvent.UserNameFieldChanged(username))
+                text = viewModel.emailText.value,
+                onValueChange = { email ->
+                    viewModel.onEvent(
+                        RegisterScreenEvent.EmailFieldChanged(email)
+                    )
                 },
                 error = viewModel.usernameError.value,
-                hint = stringResource(id = R.string.login_hint),
+                hint = stringResource(id = R.string.email_hint),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(PaddingMedium))
+            StandardTextField(
+                text = viewModel.usernameText.value,
+                onValueChange = { username ->
+                    viewModel.onEvent(
+                        RegisterScreenEvent.UserNameFieldChanged(username)
+                    )
+                },
+                error = viewModel.usernameError.value,
+                hint = stringResource(id = R.string.username_hint),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -54,13 +68,15 @@ fun LoginScreen(
             StandardTextField(
                 text = viewModel.passwordText.value,
                 onValueChange = { password ->
-                    viewModel.onEvent(LoginScreenEvent.PasswordFieldChanged(password))
+                    viewModel.onEvent(
+                        RegisterScreenEvent.PasswordFieldChanged(password)
+                    )
                 },
                 error = viewModel.passwordError.value,
                 showPassword = viewModel.showPassword.value,
                 setShowPasswordCallback = {
                     viewModel.onEvent(
-                        LoginScreenEvent.SetPasswordVisibility(it)
+                        RegisterScreenEvent.SetPasswordVisibility(it)
                     )
                 },
                 hint = stringResource(id = R.string.password_hint),
@@ -74,7 +90,7 @@ fun LoginScreen(
                     .align(Alignment.End)
             ) {
                 Text(
-                    text = stringResource(id = R.string.login),
+                    text = stringResource(id = R.string.register),
                     color = MaterialTheme.colors.onPrimary
                 )
             }
@@ -86,20 +102,20 @@ fun LoginScreen(
         ) {
             Text(
                 text = buildAnnotatedString {
-                    append(stringResource(id = R.string.dont_have_account))
+                    append(stringResource(id = R.string.already_have_account))
                     append(" ")
                     withStyle(
                         style = SpanStyle(
                             color = MaterialTheme.colors.primary
                         )
                     ) {
-                        append(stringResource(id = R.string.sign_up))
+                        append(stringResource(id = R.string.sign_in))
                     }
                 },
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .clickable {
-                        navController.navigate(Screen.RegisterScreen.route)
+                        navController.popBackStack()
                     }
             )
         }

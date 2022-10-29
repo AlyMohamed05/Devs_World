@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.presentation.login
+package com.silverbullet.devsworld.presentation.register
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,10 +7,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class RegisterViewModel @Inject constructor(
+
+) : ViewModel() {
 
     private val _usernameText = mutableStateOf("")
     val usernameText: State<String> = _usernameText
+
+    private val _emailText = mutableStateOf("")
+    val emailText: State<String> = _emailText
 
     private val _passwordText = mutableStateOf("")
     val passwordText: State<String> = _passwordText
@@ -24,22 +29,20 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private val _passwordError = mutableStateOf<String?>(null)
     val passwordError: State<String?> = _passwordError
 
-    fun onEvent(loginScreenEvent: LoginScreenEvent) {
-        when (loginScreenEvent) {
-
-            is LoginScreenEvent.UserNameFieldChanged -> {
-                _usernameText.value = loginScreenEvent.username
+    fun onEvent(event: RegisterScreenEvent) {
+        when (event) {
+            is RegisterScreenEvent.UserNameFieldChanged -> {
+                _usernameText.value = event.username
             }
-
-            is LoginScreenEvent.PasswordFieldChanged -> {
-                _passwordText.value = loginScreenEvent.password
+            is RegisterScreenEvent.EmailFieldChanged -> {
+                _emailText.value = event.email
             }
-
-            is LoginScreenEvent.SetPasswordVisibility -> {
-                _showPassword.value = loginScreenEvent.isVisible
+            is RegisterScreenEvent.PasswordFieldChanged -> {
+                _passwordText.value = event.password
             }
-
+            is RegisterScreenEvent.SetPasswordVisibility -> {
+                _showPassword.value = event.isVisible
+            }
         }
     }
-
 }
