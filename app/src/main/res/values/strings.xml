@@ -12,5 +12,12 @@
     <string name="sign_in">Sign in!</string>
     <string name="email_hint">E-Mail</string>
     <string name="username_hint">Username</string>
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="read_more">Read more</string>
+    <string name="liked_by_x_people">Liked by %d people</string>
+    <string name="x_comments">%d comments</string>
 
 </resources>
