@@ -69,7 +69,7 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screen.MainFeedScreen.route) },
                 modifier = Modifier
                     .align(Alignment.End)
             ) {

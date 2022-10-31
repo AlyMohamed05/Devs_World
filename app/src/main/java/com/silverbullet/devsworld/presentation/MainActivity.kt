@@ -6,10 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.silverbullet.devsworld.navigation.AppNavHost
+import com.silverbullet.devsworld.navigation.Screen
+import com.silverbullet.devsworld.presentation.components.StandardScaffold
 import com.silverbullet.devsworld.presentation.ui.theme.DevsWorldTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +30,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     val navController = rememberNavController()
-                    AppNavHost(navController = navController)
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    StandardScaffold(
+                        navController = navController,
+                        showBottomBar = navBackStackEntry?.destination?.route in listOf(
+                            Screen.MainFeedScreen.route,
+                            Screen.ChatScreen.route,
+                            Screen.ActivityScreen.route,
+                            Screen.ProfileScreen.route
+                        )
+                    ) {
+                        AppNavHost(navController = navController)
+                    }
                 }
             }
         }
