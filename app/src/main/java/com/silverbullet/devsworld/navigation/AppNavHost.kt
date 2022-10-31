@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.silverbullet.devsworld.presentation.activity.ActivityScreen
 import com.silverbullet.devsworld.presentation.chat.ChatScreen
+import com.silverbullet.devsworld.presentation.create_post.CreatePostScreen
 import com.silverbullet.devsworld.presentation.login.LoginScreen
 import com.silverbullet.devsworld.presentation.main_feed.MainFeedScreen
 import com.silverbullet.devsworld.presentation.profile.ProfileScreen
@@ -38,6 +39,10 @@ fun AppNavHost(navController: NavHostController) {
 
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController = navController)
+        }
+
+        composable(Screen.CreatePostScreen.route) {
+            CreatePostScreen(navController = navController)
         }
 
     }

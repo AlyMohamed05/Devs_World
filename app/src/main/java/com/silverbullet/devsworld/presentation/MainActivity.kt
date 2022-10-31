@@ -38,7 +38,10 @@ class MainActivity : ComponentActivity() {
                             Screen.ChatScreen.route,
                             Screen.ActivityScreen.route,
                             Screen.ProfileScreen.route
-                        )
+                        ),
+                        onFabClick = {
+                            navController.navigate(Screen.CreatePostScreen.route)
+                        }
                     ) {
                         AppNavHost(navController = navController)
                     }

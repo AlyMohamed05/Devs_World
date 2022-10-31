@@ -25,7 +25,7 @@ import com.silverbullet.devsworld.presentation.ui.theme.PaddingSmall
 @Composable
 fun RowScope.BottomNavItem(
     modifier: Modifier = Modifier,
-    icon: ImageVector,
+    icon: ImageVector? = null,
     contentDescription: String? = null,
     enabled: Boolean = true,
     selected: Boolean = false,
@@ -67,11 +67,13 @@ fun RowScope.BottomNavItem(
                         }
                     }
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = contentDescription,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                if(icon!=null){
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = contentDescription,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
                 if (alertCount != null) {
                     val alertText = if (alertCount > 99) "99+" else alertCount.toString()
                     Text(

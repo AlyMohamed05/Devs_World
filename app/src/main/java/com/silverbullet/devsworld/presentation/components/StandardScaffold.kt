@@ -6,17 +6,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Doorbell
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.silverbullet.devsworld.navigation.BottomNavItem
 import com.silverbullet.devsworld.navigation.NavItem
 import com.silverbullet.devsworld.navigation.Screen
+import com.silverbullet.devsworld.R
 
 @Composable
 fun StandardScaffold(
@@ -33,6 +36,7 @@ fun StandardScaffold(
             icon = Icons.Outlined.Message,
             contentDescription = "Messages"
         ),
+        NavItem(route = "NO_ROUTE"),
         NavItem(
             route = Screen.ActivityScreen.route,
             icon = Icons.Outlined.Doorbell,
@@ -44,6 +48,7 @@ fun StandardScaffold(
             contentDescription = "Profile"
         )
     ),
+    onFabClick: () -> Unit = {},
     navController: NavController,
     content: @Composable () -> Unit = {}
 ) {
@@ -66,11 +71,28 @@ fun StandardScaffold(
                             contentDescription = navItem.contentDescription,
                             alertCount = navItem.alertCount,
                             selected = navController.currentDestination?.route == navItem.route,
+                            enabled = navItem.icon != null
                         )
                     }
                 }
             }
         },
+        floatingActionButton = {
+            if (showBottomBar) {
+                FloatingActionButton(
+                    onClick = onFabClick,
+                    backgroundColor = MaterialTheme.colors.primary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add, contentDescription = stringResource(
+                            id = R.string.make_post
+                        )
+                    )
+                }
+            }
+        },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ) { paddingValues ->
         Surface(
