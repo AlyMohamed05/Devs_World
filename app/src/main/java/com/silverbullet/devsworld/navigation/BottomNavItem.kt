@@ -1,5 +1,7 @@
 package com.silverbullet.devsworld.navigation
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -37,6 +39,10 @@ fun RowScope.BottomNavItem(
     alertCount?.let {
         require(alertCount >= 0)
     }
+    val lineLength = animateFloatAsState(
+        targetValue = if (selected) 1f else 0f,
+        animationSpec = tween(durationMillis = 300)
+    )
     BottomNavigationItem(
         modifier = modifier,
         selected = selected,
@@ -54,11 +60,11 @@ fun RowScope.BottomNavItem(
                             drawLine(
                                 color = selectedColor,
                                 start = Offset(
-                                    size.width / 2f - 15.dp.toPx(),
+                                    size.width / 2f - lineLength.value * 15.dp.toPx(),
                                     size.height
                                 ),
                                 end = Offset(
-                                    size.width / 2f + 15.dp.toPx(),
+                                    size.width / 2f + lineLength.value * 15.dp.toPx(),
                                     size.height
                                 ),
                                 strokeWidth = 2.dp.toPx(),
@@ -67,7 +73,7 @@ fun RowScope.BottomNavItem(
                         }
                     }
             ) {
-                if(icon!=null){
+                if (icon != null) {
                     Icon(
                         imageVector = icon,
                         contentDescription = contentDescription,

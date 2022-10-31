@@ -7,10 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.Doorbell
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Message
-import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -39,7 +36,7 @@ fun StandardScaffold(
         NavItem(route = "NO_ROUTE"),
         NavItem(
             route = Screen.ActivityScreen.route,
-            icon = Icons.Outlined.Doorbell,
+            icon = Icons.Outlined.Notifications,
             contentDescription = "Activity"
         ),
         NavItem(
@@ -66,7 +63,9 @@ fun StandardScaffold(
                         BottomNavItem(
                             icon = navItem.icon,
                             onClick = {
-                                navController.navigate(navItem.route)
+                                if (navController.currentDestination?.route != navItem.route) {
+                                    navController.navigate(navItem.route)
+                                }
                             },
                             contentDescription = navItem.contentDescription,
                             alertCount = navItem.alertCount,
