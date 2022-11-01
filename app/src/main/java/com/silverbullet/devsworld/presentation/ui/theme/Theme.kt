@@ -9,7 +9,8 @@ private val DarkColorPalette = darkColors(
     background = DarkGray,
     onBackground = TextWhite,
     onPrimary = DarkGray,
-    onSurface = LightGray
+    onSurface = LightGray,
+    surface = MediumGray
 )
 
 @Composable

@@ -22,6 +22,9 @@ import com.silverbullet.devsworld.R
 fun StandardScaffold(
     modifier: Modifier = Modifier,
     showBottomBar: Boolean = true,
+    onFabClick: () -> Unit = {},
+    navController: NavController,
+    content: @Composable () -> Unit = {},
     bottomNavItems: List<NavItem> = listOf(
         NavItem(
             route = Screen.MainFeedScreen.route,
@@ -45,9 +48,6 @@ fun StandardScaffold(
             contentDescription = "Profile"
         )
     ),
-    onFabClick: () -> Unit = {},
-    navController: NavController,
-    content: @Composable () -> Unit = {}
 ) {
     Scaffold(
         bottomBar = {
@@ -59,7 +59,7 @@ fun StandardScaffold(
                     cutoutShape = CircleShape,
                     elevation = 5.dp,
                 ) {
-                    bottomNavItems.forEachIndexed { index, navItem ->
+                    bottomNavItems.forEach { navItem ->
                         BottomNavItem(
                             icon = navItem.icon,
                             onClick = {

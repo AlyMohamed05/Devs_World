@@ -39,7 +39,7 @@ import com.silverbullet.devsworld.util.Constants
 @Composable
 fun Post(
     post: Post,
-    profilePictureSize: Dp = 75.dp
+    onPostClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -49,18 +49,21 @@ fun Post(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = profilePictureSize / 2f)
+                .offset(y = ProfilePictureSize / 2f)
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
                 .background(MediumGray)
+                .clickable { onPostClick() }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.kermit),
                 contentDescription = "Post Image"
             )
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(PaddingMedium)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(PaddingMedium)
+            ) {
                 ActionRow(
                     username = "Android",
                     modifier = Modifier.fillMaxWidth(),
@@ -82,7 +85,7 @@ fun Post(
                     text = buildAnnotatedString {
                         append(post.description)
                         withStyle(SpanStyle(color = HintGray)) {
-                            LocalContext.current.getString(R.string.read_more)
+                            append(LocalContext.current.getString(R.string.read_more))
                         }
                     },
                     style = MaterialTheme.typography.body2,
@@ -112,7 +115,7 @@ fun Post(
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .clip(CircleShape)
-                .size(profilePictureSize)
+                .size(ProfilePictureSize)
                 .align(Alignment.TopCenter)
         )
     }

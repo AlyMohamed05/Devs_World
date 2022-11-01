@@ -41,10 +41,11 @@ class MainActivity : ComponentActivity() {
                         ),
                         onFabClick = {
                             navController.navigate(Screen.CreatePostScreen.route)
+                        },
+                        content = {
+                            AppNavHost(navController = navController)
                         }
-                    ) {
-                        AppNavHost(navController = navController)
-                    }
+                    )
                 }
             }
         }
