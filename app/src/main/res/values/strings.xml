@@ -38,5 +38,12 @@
     <string name="posts">Posts</string>
     <string name="unfollow">Unfollow</string>
     <string name="follow">Follow</string>
+    <string name="edit_your_profile">Edit your profile</string>
+    <string name="github_profile_url">Github Profile Url</string>
+    <string name="instagram_profile_url">Instagram Profile Url</string>
+    <string name="linkedin_profile_url">Linkedin Profile Url</string>
+    <string name="bio">Bio</string>
+    <string name="select_top_3_skills">Select you top 3 skills</string>
+    <string name="save_chagnes">Save changes</string>
 
 </resources>

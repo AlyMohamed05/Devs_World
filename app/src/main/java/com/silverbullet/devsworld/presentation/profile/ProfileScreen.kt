@@ -53,7 +53,8 @@ fun ProfileScreen(navController: NavController) {
                         33,
                         13,
                         69
-                    )
+                    ),
+                    onEditClick = { navController.navigate(Screen.EditProfileScreen.route) }
                 )
             }
             items(1024) {
