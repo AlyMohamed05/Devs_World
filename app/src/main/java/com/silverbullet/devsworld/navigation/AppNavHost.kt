@@ -10,6 +10,7 @@ import com.silverbullet.devsworld.presentation.create_post.CreatePostScreen
 import com.silverbullet.devsworld.presentation.edit_profile.EditProfileScreen
 import com.silverbullet.devsworld.presentation.login.LoginScreen
 import com.silverbullet.devsworld.presentation.main_feed.MainFeedScreen
+import com.silverbullet.devsworld.presentation.person_list.PersonListScreen
 import com.silverbullet.devsworld.presentation.post_detail.PostDetailScreen
 import com.silverbullet.devsworld.presentation.profile.ProfileScreen
 import com.silverbullet.devsworld.presentation.register.RegisterScreen
@@ -68,6 +69,10 @@ fun AppNavHost(navController: NavHostController) {
 
         composable(Screen.EditProfileScreen.route) {
             EditProfileScreen(navController = navController)
+        }
+
+        composable(Screen.PersonListScreen.route) {
+            PersonListScreen(navController = navController)
         }
 
     }

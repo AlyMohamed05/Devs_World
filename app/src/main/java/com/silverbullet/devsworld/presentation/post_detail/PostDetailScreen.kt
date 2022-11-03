@@ -2,6 +2,7 @@ package com.silverbullet.devsworld.presentation.post_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.domain.model.Post
+import com.silverbullet.devsworld.navigation.Screen
 import com.silverbullet.devsworld.presentation.components.ActionRow
 import com.silverbullet.devsworld.presentation.components.StandardToolbar
 import com.silverbullet.devsworld.presentation.ui.theme.*
@@ -103,7 +105,10 @@ fun PostDetailScreen(
                                         id = R.string.liked_by_x_people,
                                         post.likeCount
                                     ),
-                                    style = MaterialTheme.typography.h2, fontSize = 16.sp
+                                    style = MaterialTheme.typography.h2, fontSize = 16.sp,
+                                    modifier = Modifier.clickable {
+                                        navController.navigate(Screen.PersonListScreen.route)
+                                    }
                                 )
                             }
                         }
