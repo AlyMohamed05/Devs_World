@@ -45,5 +45,9 @@
     <string name="bio">Bio</string>
     <string name="select_top_3_skills">Select you top 3 skills</string>
     <string name="save_chagnes">Save changes</string>
+    <string name="create_new_post">Create Post</string>
+    <string name="choose_image">Choose image</string>
+    <string name="description">Description</string>
+    <string name="post">Post</string>
 
 </resources>
