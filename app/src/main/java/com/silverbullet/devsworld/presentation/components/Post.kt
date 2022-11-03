@@ -38,18 +38,24 @@ import com.silverbullet.devsworld.util.Constants
 
 @Composable
 fun Post(
+    modifier: Modifier = Modifier,
     post: Post,
+    showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {}
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(PaddingMedium)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = ProfilePictureSize / 2f)
+                .offset(
+                    y = if (showProfileImage)
+                        ProfilePictureMedium / 2f
+                    else 0.dp
+                )
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
                 .background(MediumGray)
@@ -110,14 +116,16 @@ fun Post(
             }
 
         }
-        Image(
-            painter = painterResource(id = R.drawable.kermit),
-            contentDescription = "Profile Picture",
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(ProfilePictureSize)
-                .align(Alignment.TopCenter)
-        )
+        if (showProfileImage) {
+            Image(
+                painter = painterResource(id = R.drawable.kermit),
+                contentDescription = "Profile Picture",
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(ProfilePictureMedium)
+                    .align(Alignment.TopCenter)
+            )
+        }
     }
 }
 

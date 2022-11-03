@@ -61,7 +61,7 @@ fun PostDetailScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .offset(y = ProfilePictureSize / 2f)
+                                .offset(y = ProfilePictureMedium / 2f)
                                 .clip(MaterialTheme.shapes.medium)
                                 .shadow(5.dp)
                                 .background(MediumGray)
@@ -112,7 +112,7 @@ fun PostDetailScreen(
                             contentDescription = "Profile Picture",
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .size(ProfilePictureSize)
+                                .size(ProfilePictureMedium)
                                 .align(Alignment.TopCenter)
                         )
                     }
