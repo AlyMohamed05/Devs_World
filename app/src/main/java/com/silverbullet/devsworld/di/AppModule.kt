@@ -3,6 +3,7 @@ package com.silverbullet.devsworld.di
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.silverbullet.devsworld.core.util.SharedPrefKeys
 import com.silverbullet.devsworld.feature_auth.data.remote.AuthApi
 import com.silverbullet.devsworld.feature_auth.data.repository.AuthRepositoryImpl
 import com.silverbullet.devsworld.feature_auth.domain.repsitory.AuthRepository
@@ -24,7 +25,7 @@ class AppModule {
     fun provideSharedPref(@ApplicationContext app: Context): SharedPreferences {
         return app
             .getSharedPreferences(
-                "DEVS_WORLD_SHARED_PREF",
+                SharedPrefKeys.SHARED_PREF_NAME,
                 MODE_PRIVATE
             )
     }
@@ -42,8 +43,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(authApi: AuthApi): AuthRepository {
-        return AuthRepositoryImpl(authApi)
+    fun provideAuthRepository(authApi: AuthApi,sharedPreferences: SharedPreferences): AuthRepository {
+        return AuthRepositoryImpl(authApi,sharedPreferences)
     }
 
 }

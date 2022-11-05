@@ -1,13 +1,17 @@
 package com.silverbullet.devsworld.feature_auth.presentation.login
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -26,6 +30,27 @@ fun LoginScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                is LoginViewModel.UiEvent.ShowToast -> {
+                    Toast.makeText(
+                        context,
+                        event.message.asString(context),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is LoginViewModel.UiEvent.Navigate -> {
+                    navController.navigate(event.route) {
+                        popUpTo(Screen.LoginScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -41,22 +66,22 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.usernameText.value,
-                onValueChange = { username ->
-                    viewModel.onEvent(LoginScreenEvent.UserNameFieldChanged(username))
+                text = viewModel.emailInput.value.text,
+                onValueChange = { email ->
+                    viewModel.onEvent(LoginScreenEvent.EmailFieldChanged(email))
                 },
-                error = viewModel.usernameError.value,
+                error = viewModel.emailInput.value.error?.asString(),
                 hint = stringResource(id = R.string.login_hint),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.passwordText.value,
+                text = viewModel.passwordInput.value.text,
                 onValueChange = { password ->
                     viewModel.onEvent(LoginScreenEvent.PasswordFieldChanged(password))
                 },
-                error = viewModel.passwordError.value,
+                error = viewModel.passwordInput.value.error?.asString(),
                 showPassword = viewModel.showPassword.value,
                 setShowPasswordCallback = {
                     viewModel.onEvent(
@@ -68,15 +93,24 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
-            Button(
-                onClick = { navController.navigate(Screen.MainFeedScreen.route) },
-                modifier = Modifier
-                    .align(Alignment.End)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.login),
-                    color = MaterialTheme.colors.onPrimary
-                )
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = { viewModel.onEvent(LoginScreenEvent.Login) },
+                    enabled = !viewModel.isLoading.value,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.login),
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+                if (viewModel.isLoading.value) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier.align(Alignment.CenterStart)
+                    )
+                }
             }
         }
         Box(

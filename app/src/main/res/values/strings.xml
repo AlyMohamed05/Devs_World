@@ -4,7 +4,7 @@
 
     <string name="login">Login</string>
     <string name="password_hint">Enter your password</string>
-    <string name="login_hint">Username / Email</string>
+    <string name="login_hint">Email</string>
     <string name="dont_have_account">Don\'t have account yet</string>
     <string name="sign_up">Sign up!</string>
     <string name="register">Register</string>
@@ -54,5 +54,6 @@
     <string name="email_already_used">Email is already used</string>
     <string name="email_not_valid">Please enter a valid email</string>
     <string name="registered">Registered</string>
+    <string name="wrong_credentials">Wrong credentials</string>
 
 </resources>

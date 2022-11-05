@@ -11,4 +11,9 @@ interface AuthRepository {
         password: String
     ): Flow<Resource<Unit>>
 
+    suspend fun login(
+        email: String,
+        password: String
+    ): Flow<Resource<Unit>>
+
 }
