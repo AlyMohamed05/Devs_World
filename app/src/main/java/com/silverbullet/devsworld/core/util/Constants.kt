@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.util
+package com.silverbullet.devsworld.core.util
 
 object Constants {
 

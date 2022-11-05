@@ -10,4 +10,6 @@ sealed class RegisterScreenEvent {
 
     class SetPasswordVisibility(val isVisible: Boolean) : RegisterScreenEvent()
 
+    object Register: RegisterScreenEvent()
+
 }

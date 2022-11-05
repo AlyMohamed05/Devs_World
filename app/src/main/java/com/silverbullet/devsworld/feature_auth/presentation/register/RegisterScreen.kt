@@ -1,13 +1,17 @@
 package com.silverbullet.devsworld.feature_auth.presentation.register
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -25,6 +29,27 @@ fun RegisterScreen(
     navController: NavController,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                is RegisterViewModel.UiEvent.ShowToast -> {
+                    Toast.makeText(
+                        context,
+                        event.message.asString(context),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is RegisterViewModel.UiEvent.Navigate -> {
+                    navController.navigate(event.route) {
+                        popUpTo(event.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -40,39 +65,40 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.emailText.value,
+                text = viewModel.emailInput.value.text,
                 onValueChange = { email ->
                     viewModel.onEvent(
                         RegisterScreenEvent.EmailFieldChanged(email)
                     )
                 },
-                error = viewModel.usernameError.value,
+                error = viewModel.emailInput.value.error?.asString(),
                 hint = stringResource(id = R.string.email_hint),
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardType = KeyboardType.Email
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.usernameText.value,
+                text = viewModel.userInput.value.text,
                 onValueChange = { username ->
                     viewModel.onEvent(
                         RegisterScreenEvent.UserNameFieldChanged(username)
                     )
                 },
-                error = viewModel.usernameError.value,
+                error = viewModel.userInput.value.error?.asString(),
                 hint = stringResource(id = R.string.username_hint),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
             StandardTextField(
-                text = viewModel.passwordText.value,
+                text = viewModel.passwordInput.value.text,
                 onValueChange = { password ->
                     viewModel.onEvent(
                         RegisterScreenEvent.PasswordFieldChanged(password)
                     )
                 },
-                error = viewModel.passwordError.value,
+                error = viewModel.passwordInput.value.error?.asString(),
                 showPassword = viewModel.showPassword.value,
                 setShowPasswordCallback = {
                     viewModel.onEvent(
@@ -84,15 +110,23 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(PaddingMedium))
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .align(Alignment.End)
+            Box(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    text = stringResource(id = R.string.register),
-                    color = MaterialTheme.colors.onPrimary
-                )
+                Button(
+                    onClick = { viewModel.onEvent(RegisterScreenEvent.Register) },
+                    enabled = !viewModel.isLoading.value,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.register),
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+                if (viewModel.isLoading.value) {
+                    CircularProgressIndicator(color = MaterialTheme.colors.primary)
+                }
             }
         }
         Box(

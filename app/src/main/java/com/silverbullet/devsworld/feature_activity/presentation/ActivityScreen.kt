@@ -16,7 +16,7 @@ import com.silverbullet.devsworld.feature_activity.domain.ActivityAction
 import com.silverbullet.devsworld.core.presentation.components.StandardToolbar
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingSmall
-import com.silverbullet.devsworld.util.DateFormatUtil
+import com.silverbullet.devsworld.core.util.DateFormatUtil
 import kotlin.random.Random
 
 @Composable

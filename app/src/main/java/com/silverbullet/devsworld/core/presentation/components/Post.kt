@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.ui.theme.*
 import com.silverbullet.devsworld.core.domain.model.Post
-import com.silverbullet.devsworld.util.Constants
+import com.silverbullet.devsworld.core.util.Constants
 
 @Composable
 fun Post(

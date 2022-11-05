@@ -50,5 +50,9 @@
     <string name="description">Description</string>
     <string name="post">Post</string>
     <string name="liked_by">Liked by</string>
+    <string name="cant_connect">Check you internet connection</string>
+    <string name="email_already_used">Email is already used</string>
+    <string name="email_not_valid">Please enter a valid email</string>
+    <string name="registered">Registered</string>
 
 </resources>
