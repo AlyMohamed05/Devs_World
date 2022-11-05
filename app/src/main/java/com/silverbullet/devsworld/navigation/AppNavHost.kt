@@ -18,9 +18,9 @@ import com.silverbullet.devsworld.feature_auth.presentation.register.RegisterScr
 import com.silverbullet.devsworld.feature_search.presentation.SearchScreen
 
 @Composable
-fun AppNavHost(navController: NavHostController) {
+fun AppNavHost(navController: NavHostController, startDestination: String) {
 
-    NavHost(navController = navController, startDestination = Screen.LoginScreen.route) {
+    NavHost(navController = navController, startDestination = startDestination) {
 
         composable(Screen.LoginScreen.route) {
             LoginScreen(navController = navController)

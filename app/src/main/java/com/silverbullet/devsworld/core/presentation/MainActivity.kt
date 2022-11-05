@@ -3,6 +3,7 @@ package com.silverbullet.devsworld.core.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -20,9 +21,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: MainActivityViewModel by viewModels()
+
+    private val startDestination by lazy {
+        if (viewModel.hasTokenInPref()) {
+            Screen.MainFeedScreen.route
+        } else {
+            Screen.LoginScreen.route
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        installSplashScreen().setKeepOnScreenCondition { !viewModel.stopSplash }
         setContent {
             DevsWorldTheme {
                 Surface(
@@ -43,7 +54,10 @@ class MainActivity : ComponentActivity() {
                             navController.navigate(Screen.CreatePostScreen.route)
                         },
                         content = {
-                            AppNavHost(navController = navController)
+                            AppNavHost(
+                                navController = navController,
+                                startDestination = startDestination
+                            )
                         }
                     )
                 }

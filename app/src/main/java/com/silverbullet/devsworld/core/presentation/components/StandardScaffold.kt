@@ -40,7 +40,8 @@ fun StandardScaffold(
         NavItem(
             route = Screen.ActivityScreen.route,
             icon = Icons.Outlined.Notifications,
-            contentDescription = "Activity"
+            contentDescription = "Activity",
+            alertCount = 3
         ),
         NavItem(
             route = Screen.ProfileScreen.route,
