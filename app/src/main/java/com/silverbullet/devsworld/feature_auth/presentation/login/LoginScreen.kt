@@ -24,6 +24,7 @@ import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.navigation.Screen
 import com.silverbullet.devsworld.core.presentation.components.StandardTextField
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
+import com.silverbullet.devsworld.feature_auth.presentation.AuthViewModel
 
 @Composable
 fun LoginScreen(
@@ -34,14 +35,14 @@ fun LoginScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.uiEvents.collect { event ->
             when (event) {
-                is LoginViewModel.UiEvent.ShowToast -> {
+                is AuthViewModel.UiEvent.ShowToast -> {
                     Toast.makeText(
                         context,
                         event.message.asString(context),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is LoginViewModel.UiEvent.Navigate -> {
+                is AuthViewModel.UiEvent.Navigate -> {
                     navController.navigate(event.route) {
                         popUpTo(Screen.LoginScreen.route) {
                             inclusive = true

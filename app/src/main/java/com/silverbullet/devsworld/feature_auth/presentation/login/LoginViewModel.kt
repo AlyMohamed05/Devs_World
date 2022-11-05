@@ -1,44 +1,21 @@
 package com.silverbullet.devsworld.feature_auth.presentation.login
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.util.Resource
 import com.silverbullet.devsworld.core.util.UiText
 import com.silverbullet.devsworld.feature_auth.domain.repsitory.AuthRepository
+import com.silverbullet.devsworld.feature_auth.presentation.AuthViewModel
 import com.silverbullet.devsworld.feature_auth.presentation.InputFieldState
 import com.silverbullet.devsworld.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: AuthRepository
-) : ViewModel() {
-
-    private val _emailInput = mutableStateOf(InputFieldState())
-    private val email: String
-        get() = _emailInput.value.text
-    val emailInput: State<InputFieldState> = _emailInput
-
-    private val _passwordInput = mutableStateOf(InputFieldState())
-    private val password: String
-        get() = _passwordInput.value.text
-    val passwordInput: State<InputFieldState> = _passwordInput
-
-    private val _showPassword = mutableStateOf(false)
-    val showPassword: State<Boolean> = _showPassword
-
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
-
-    private val _uiEvents = MutableSharedFlow<UiEvent>()
-    val uiEvents = _uiEvents.asSharedFlow()
+) : AuthViewModel() {
 
     fun onEvent(loginScreenEvent: LoginScreenEvent) {
         when (loginScreenEvent) {
@@ -103,14 +80,6 @@ class LoginViewModel @Inject constructor(
             valid = false
         }
         return valid
-    }
-
-    sealed class UiEvent {
-
-        class ShowToast(val message: UiText) : UiEvent()
-
-        class Navigate(val route: String) : UiEvent()
-
     }
 
 }

@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.components.StandardTextField
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
+import com.silverbullet.devsworld.feature_auth.presentation.AuthViewModel
 
 @Composable
 fun RegisterScreen(
@@ -33,14 +34,14 @@ fun RegisterScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.uiEvents.collect { event ->
             when (event) {
-                is RegisterViewModel.UiEvent.ShowToast -> {
+                is AuthViewModel.UiEvent.ShowToast -> {
                     Toast.makeText(
                         context,
                         event.message.asString(context),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is RegisterViewModel.UiEvent.Navigate -> {
+                is AuthViewModel.UiEvent.Navigate -> {
                     navController.navigate(event.route) {
                         popUpTo(event.route) {
                             inclusive = true
