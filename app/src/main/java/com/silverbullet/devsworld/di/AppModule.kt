@@ -3,17 +3,15 @@ package com.silverbullet.devsworld.di
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import com.silverbullet.devsworld.core.util.SharedPrefKeys
-import com.silverbullet.devsworld.feature_auth.data.remote.AuthApi
-import com.silverbullet.devsworld.feature_auth.data.repository.AuthRepositoryImpl
-import com.silverbullet.devsworld.feature_auth.domain.repsitory.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.OkHttpClient
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -32,19 +30,28 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(): AuthApi {
-        return Retrofit
-            .Builder()
-            .baseUrl(AuthApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AuthApi::class.java)
+    fun provideGson(): Gson {
+        return Gson()
     }
 
     @Provides
     @Singleton
-    fun provideAuthRepository(authApi: AuthApi,sharedPreferences: SharedPreferences): AuthRepository {
-        return AuthRepositoryImpl(authApi,sharedPreferences)
+    fun provideOkHttpClient(sharedPref: SharedPreferences): OkHttpClient {
+        val token = sharedPref.getString(SharedPrefKeys.JWT_TOKEN, null) ?: ""
+        if (token.isBlank()) {
+            Timber.w("Token is blank")
+        }
+        return OkHttpClient
+            .Builder()
+            .addInterceptor {
+                val modifiedRequest = it
+                    .request()
+                    .newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .build()
+                it.proceed(modifiedRequest)
+            }
+            .build()
     }
 
 }

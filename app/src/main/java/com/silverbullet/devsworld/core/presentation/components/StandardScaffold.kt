@@ -65,7 +65,13 @@ fun StandardScaffold(
                             icon = navItem.icon,
                             onClick = {
                                 if (navController.currentDestination?.route != navItem.route) {
-                                    navController.navigate(navItem.route)
+                                    navController
+                                        .navigate(navItem.route) {
+                                            popUpTo(Screen.MainFeedScreen.route) {
+                                                inclusive =
+                                                    navItem.route == Screen.MainFeedScreen.route
+                                            }
+                                        }
                                 }
                             },
                             contentDescription = navItem.contentDescription,

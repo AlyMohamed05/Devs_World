@@ -55,5 +55,9 @@
     <string name="email_not_valid">Please enter a valid email</string>
     <string name="registered">Registered</string>
     <string name="wrong_credentials">Wrong credentials</string>
+    <string name="empty_description">Description is empty</string>
+    <string name="no_image">You must select an image</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="created">Created</string>
 
 </resources>

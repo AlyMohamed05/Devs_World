@@ -12,7 +12,6 @@ import com.silverbullet.devsworld.feature_auth.domain.repsitory.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -59,7 +58,6 @@ class AuthRepositoryImpl @Inject constructor(
             val response = api.login(request)
             if (response.successful) {
                 val token = response.data?.token
-                Timber.d(token)
                 if (token != null) {
                     emit(Resource.Success(Unit))
                     sharedPref

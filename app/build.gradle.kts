@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -76,7 +77,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
 
     // Material Design
-    implementation("androidx.compose.material:material:1.3.0")
+    implementation("androidx.compose.material:material:1.3.1")
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.0")
@@ -106,18 +107,26 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     // Retrofit
-    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10")
+
+    // uCrop
+    implementation("com.github.yalantis:ucrop:2.2.6")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
     // Timber Logger
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Junit
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit:1.1.4")
 
     // Espresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
 }
