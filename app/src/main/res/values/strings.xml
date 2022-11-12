@@ -60,5 +60,8 @@
     <string name="unexpected_error">Unexpected error</string>
     <string name="created">Created</string>
     <string name="not_found">Not found</string>
+    <string name="followed">followed</string>
+    <string name="your_comment">your comment</string>
+    <string name="you">you</string>
 
 </resources>

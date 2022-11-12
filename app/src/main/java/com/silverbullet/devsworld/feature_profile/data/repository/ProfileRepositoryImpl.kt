@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
 
 class ProfileRepositoryImpl(private val api: ProfileApi) : ProfileRepository {
@@ -27,7 +26,6 @@ class ProfileRepositoryImpl(private val api: ProfileApi) : ProfileRepository {
                     api.getUserProfile(userId)
                 }
             if (response.successful && response.data != null) {
-                Timber.d(response.data.toString())
                 emit(Resource.Success(response.data.toProfile()))
             } else {
                 emit(Resource.Error(error = UiText.StringResource(R.string.unexpected_error)))

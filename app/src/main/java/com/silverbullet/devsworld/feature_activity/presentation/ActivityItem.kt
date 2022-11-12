@@ -19,9 +19,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silverbullet.devsworld.feature_activity.domain.model.Activity
-import com.silverbullet.devsworld.feature_activity.domain.ActivityAction
+import com.silverbullet.devsworld.feature_activity.data.util.ActivityAction
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.ui.theme.TextWhite
+import com.silverbullet.devsworld.feature_activity.data.util.ActivityTargetType
 
 @Composable
 fun ActivityItem(
@@ -42,10 +43,19 @@ fun ActivityItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val actionText = when (activity.actionType) {
-                ActivityAction.LikedPost -> stringResource(id = R.string.liked)
-                ActivityAction.CommentedOnPost -> stringResource(id = R.string.commented_on)
+            val actionText = when (activity.type) {
+                ActivityAction.Liked -> stringResource(id = R.string.liked)
+                ActivityAction.Commented -> stringResource(id = R.string.commented_on)
+                ActivityAction.Followed -> stringResource(id = R.string.followed)
+                ActivityAction.None -> "???"
             }
+            val targetText = activity.targetType?.let { targetType ->
+                when (targetType) {
+                    ActivityTargetType.Post -> stringResource(id = R.string.your_post)
+                    ActivityTargetType.Comment -> stringResource(id = R.string.your_comment)
+                    else -> null
+                }
+            } ?: stringResource(id = R.string.you)
             Text(
                 text = buildAnnotatedString {
                     val boldStyle = SpanStyle(
@@ -53,16 +63,16 @@ fun ActivityItem(
                         color = TextWhite
                     )
                     withStyle(boldStyle) {
-                        append(activity.username)
+                        append(activity.issuerName)
                     }
                     append(" $actionText ")
                     withStyle(boldStyle) {
-                        append(stringResource(id = R.string.your_post))
+                        append(targetText)
                     }
                 }
             )
             Text(
-                text = activity.formattedTime,
+                text = activity.timestamp,
                 fontSize = 12.sp
             )
         }
