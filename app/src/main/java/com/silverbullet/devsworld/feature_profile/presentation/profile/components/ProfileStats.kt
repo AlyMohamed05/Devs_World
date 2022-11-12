@@ -13,16 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import com.silverbullet.devsworld.core.domain.model.User
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
+import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 
 @Composable
 fun ProfileStats(
     modifier: Modifier = Modifier,
-    user: User,
+    profile: Profile,
     isFollowing: Boolean,
-    isOwnProfile: Boolean = true,
     onFollowClick: () -> Unit = {},
 ) {
     Row(
@@ -31,21 +30,21 @@ fun ProfileStats(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ProfileNumber(
-            number = user.followersCount,
+            number = profile.followersCount,
             text = stringResource(id = R.string.followers)
         )
         Spacer(modifier = Modifier.width(PaddingMedium))
         ProfileNumber(
-            number = user.followingCount,
+            number = profile.followingCount,
             text = stringResource(id = R.string.following)
         )
         Spacer(modifier = Modifier.width(PaddingMedium))
 
         ProfileNumber(
-            number = user.postCount,
+            number = profile.postsCount,
             text = stringResource(id = R.string.posts)
         )
-        if (isOwnProfile) {
+        if (!profile.isOwnProfile) {
             Spacer(modifier = Modifier.width(PaddingMedium))
             Button(
                 onClick = onFollowClick,

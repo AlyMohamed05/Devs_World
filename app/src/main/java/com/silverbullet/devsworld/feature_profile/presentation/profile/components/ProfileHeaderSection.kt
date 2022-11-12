@@ -1,6 +1,5 @@
 package com.silverbullet.devsworld.feature_profile.presentation.profile.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -14,21 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.silverbullet.devsworld.core.domain.model.User
+import coil.compose.AsyncImage
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
 import com.silverbullet.devsworld.core.presentation.ui.theme.ProfilePictureLarge
+import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 
 @Composable
 fun ProfileHeaderSection(
     modifier: Modifier = Modifier,
-    user: User,
-    isOwnProfile: Boolean = true,
+    profile: Profile?,
     onEditClick: () -> Unit = {}
 ) {
     Column(
@@ -37,9 +36,10 @@ fun ProfileHeaderSection(
             .offset(y = -ProfilePictureLarge / 2f),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.kermit),
+        AsyncImage(
+            model = profile?.profileImageUrl,
             contentDescription = "Profile Picture",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(ProfilePictureLarge)
                 .clip(CircleShape)
@@ -48,44 +48,45 @@ fun ProfileHeaderSection(
                     color = MaterialTheme.colors.onSurface,
                 )
         )
-        Row(
-            modifier = Modifier.offset(
-                x = if (isOwnProfile)
-                    (30.dp + PaddingMedium) / 2f
-                else
-                    0.dp
-            ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = user.username,
-                style = MaterialTheme.typography.h1,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )
-            if (isOwnProfile) {
-                Spacer(modifier = Modifier.height(PaddingMedium))
-                IconButton(
-                    onClick = onEditClick,
-                    modifier = Modifier.size(30.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(id = R.string.edit)
-                    )
+        profile?.let {
+            Row(
+                modifier = Modifier.offset(
+                    x = if (profile.isOwnProfile)
+                        (30.dp + PaddingMedium) / 2f
+                    else
+                        0.dp
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = profile.username,
+                    style = MaterialTheme.typography.h1,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center
+                )
+                if (profile.isOwnProfile) {
+                    Spacer(modifier = Modifier.height(PaddingMedium))
+                    IconButton(
+                        onClick = onEditClick,
+                        modifier = Modifier.size(30.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(id = R.string.edit)
+                        )
+                    }
                 }
             }
+            Spacer(modifier = Modifier.height(PaddingMedium))
+            Text(
+                text = profile.bio,
+                style = MaterialTheme.typography.body2
+            )
+            Spacer(modifier = Modifier.height(PaddingMedium))
+            ProfileStats(
+                profile = profile,
+                isFollowing = true
+            )
         }
-        Spacer(modifier = Modifier.height(PaddingMedium))
-        Text(
-            text = user.description,
-            style = MaterialTheme.typography.body2
-        )
-        Spacer(modifier = Modifier.height(PaddingMedium))
-        ProfileStats(
-            user = user,
-            isFollowing = true,
-            isOwnProfile = isOwnProfile
-        )
     }
 }

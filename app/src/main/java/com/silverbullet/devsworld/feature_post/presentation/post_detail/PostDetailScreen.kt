@@ -18,7 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.domain.model.Post
 import com.silverbullet.devsworld.navigation.Screen
@@ -29,8 +31,10 @@ import com.silverbullet.devsworld.core.presentation.ui.theme.*
 @Composable
 fun PostDetailScreen(
     navController: NavController,
-    post: Post
+    viewModel: PostDetailViewModel = hiltViewModel()
 ) {
+    val post = Post("", "", 34, "df", "df", 3, 3)
+
     Column(modifier = Modifier.fillMaxSize()) {
         StandardToolbar(
             navController = navController,
@@ -68,10 +72,11 @@ fun PostDetailScreen(
                                 .shadow(5.dp)
                                 .background(MediumGray)
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.kermit),
+                            AsyncImage(
+                                model = post.imageUrl,
                                 contentDescription = "Post Image",
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             )
                             Column(
                                 modifier = Modifier
@@ -79,7 +84,7 @@ fun PostDetailScreen(
                                     .padding(PaddingLarge)
                             ) {
                                 ActionRow(
-                                    username = "Android",
+                                    username = post.username,
                                     modifier = Modifier.fillMaxWidth(),
                                     onLikeClick = {
 
@@ -103,7 +108,7 @@ fun PostDetailScreen(
                                 Text(
                                     text = stringResource(
                                         id = R.string.liked_by_x_people,
-                                        post.likeCount
+                                        post.likesCount
                                     ),
                                     style = MaterialTheme.typography.h2, fontSize = 16.sp,
                                     modifier = Modifier.clickable {
@@ -124,7 +129,7 @@ fun PostDetailScreen(
                     Spacer(modifier = Modifier.height(PaddingLarge))
                 }
             }
-            items(20) {
+            items(70) {
                 Comment(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -138,5 +143,6 @@ fun PostDetailScreen(
                 Spacer(modifier = Modifier.height(PaddingSmall))
             }
         }
+
     }
 }

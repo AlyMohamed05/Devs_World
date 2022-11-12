@@ -31,6 +31,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.presentation.ui.theme.*
 import com.silverbullet.devsworld.core.domain.model.Post
@@ -61,9 +62,12 @@ fun Post(
                 .background(MediumGray)
                 .clickable { onPostClick() }
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.kermit),
-                contentDescription = "Post Image"
+            AsyncImage(
+                model = post.imageUrl,
+                contentDescription = "Post Image",
+                modifier = Modifier
+                    .aspectRatio(16f/9f)
+                    .fillMaxWidth()
             )
             Column(
                 modifier = Modifier
@@ -71,7 +75,7 @@ fun Post(
                     .padding(PaddingMedium)
             ) {
                 ActionRow(
-                    username = "Android",
+                    username = post.username,
                     modifier = Modifier.fillMaxWidth(),
                     onLikeClick = {
 
@@ -104,11 +108,11 @@ fun Post(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = stringResource(id = R.string.liked_by_x_people, post.likeCount),
+                        text = stringResource(id = R.string.liked_by_x_people, post.likesCount),
                         style = MaterialTheme.typography.h2, fontSize = 16.sp
                     )
                     Text(
-                        text = stringResource(id = R.string.x_comments, post.commentCount),
+                        text = stringResource(id = R.string.x_comments, post.commentsCount),
                         style = MaterialTheme.typography.h2,
                         fontSize = 16.sp
                     )

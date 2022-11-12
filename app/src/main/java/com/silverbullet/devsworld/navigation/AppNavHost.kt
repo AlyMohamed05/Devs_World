@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.silverbullet.devsworld.core.domain.model.Post
 import com.silverbullet.devsworld.feature_activity.presentation.ActivityScreen
 import com.silverbullet.devsworld.feature_chat.presentation.ChatScreen
 import com.silverbullet.devsworld.feature_post.presentation.create_post.CreatePostScreen
@@ -50,18 +49,9 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
             CreatePostScreen(navController = navController)
         }
 
-        composable(Screen.PostDetailScreen.route) {
-            PostDetailScreen(
-                navController = navController,
-                post = Post(
-                    username = "Android",
-                    "",
-                    "",
-                    "This is a description written to test how the description appears in the post item in the main feed screen and not in the post detail screen as the main screen description should contain only three lines and then any additional lines should be added to read more section",
-                    likeCount = 33,
-                    commentCount = 13
-                )
-            )
+        composable(
+            Screen.PostDetailScreen.route ) {
+            PostDetailScreen(navController = navController)
         }
 
         composable(Screen.SearchScreen.route) {

@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.navigation.Screen
-import com.silverbullet.devsworld.core.presentation.components.Post
 import com.silverbullet.devsworld.core.presentation.components.StandardToolbar
 
 @Composable
@@ -44,17 +43,6 @@ fun MainFeedScreen(
                     )
                 }
             }
-        )
-        Post(
-            post = com.silverbullet.devsworld.core.domain.model.Post(
-                username = "Android",
-                "",
-                "",
-                "This is a description written to test how the description appears in the post item in the main feed screen and not in the post detail screen as the main screen description should contain only three lines and then any additional lines should be added to read more section",
-                likeCount = 33,
-                commentCount = 13
-            ),
-            onPostClick = {navController.navigate(Screen.PostDetailScreen.route)}
         )
     }
 }

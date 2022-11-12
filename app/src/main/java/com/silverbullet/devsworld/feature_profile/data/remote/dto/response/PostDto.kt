@@ -1,6 +1,6 @@
-package com.silverbullet.devsworld.core.domain.model
+package com.silverbullet.devsworld.feature_profile.data.remote.dto.response
 
-data class Post(
+data class PostDto(
     val imageUrl: String,
     val description: String,
     val timestamp: Long,

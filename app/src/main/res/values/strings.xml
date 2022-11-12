@@ -59,5 +59,6 @@
     <string name="no_image">You must select an image</string>
     <string name="unexpected_error">Unexpected error</string>
     <string name="created">Created</string>
+    <string name="not_found">Not found</string>
 
 </resources>
