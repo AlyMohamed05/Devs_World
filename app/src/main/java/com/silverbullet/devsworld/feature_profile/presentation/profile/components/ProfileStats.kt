@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.silverbullet.devsworld.R
+import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
-import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 
 @Composable
 fun ProfileStats(

@@ -1,8 +1,8 @@
 package com.silverbullet.devsworld.feature_profile.domain.repository
 
 import com.silverbullet.devsworld.core.domain.model.Post
+import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.util.Resource
-import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {

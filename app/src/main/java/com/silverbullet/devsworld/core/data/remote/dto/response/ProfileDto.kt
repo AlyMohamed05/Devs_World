@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.feature_profile.data.remote.dto.response
+package com.silverbullet.devsworld.core.data.remote.dto.response
 
 data class ProfileDto(
     val email: String,

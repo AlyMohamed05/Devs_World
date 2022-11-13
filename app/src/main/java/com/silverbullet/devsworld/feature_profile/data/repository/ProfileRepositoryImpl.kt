@@ -2,12 +2,12 @@ package com.silverbullet.devsworld.feature_profile.data.repository
 
 import com.silverbullet.devsworld.R
 import com.silverbullet.devsworld.core.domain.model.Post
+import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.util.Resource
 import com.silverbullet.devsworld.core.util.UiText
 import com.silverbullet.devsworld.feature_profile.data.mapper.toPost
 import com.silverbullet.devsworld.feature_profile.data.mapper.toProfile
 import com.silverbullet.devsworld.feature_profile.data.remote.ProfileApi
-import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 import com.silverbullet.devsworld.feature_profile.domain.repository.ProfileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -2,6 +2,7 @@ package com.silverbullet.devsworld.feature_search.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.silverbullet.devsworld.R
-import com.silverbullet.devsworld.core.domain.model.User
 import com.silverbullet.devsworld.core.presentation.components.StandardTextField
 import com.silverbullet.devsworld.core.presentation.components.StandardToolbar
 import com.silverbullet.devsworld.core.presentation.components.UserProfileItem
@@ -61,16 +61,9 @@ fun SearchScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                items(20) {
+                items(viewModel.profileList.value) {
                     UserProfileItem(
-                        user = User(
-                            "",
-                            "Android",
-                            "Android OS, I'm on of the most popular ones",
-                            33,
-                            13,
-                            69
-                        ),
+                        profile = it,
                         actionIcon = {
                             Icon(
                                 imageVector = Icons.Default.PersonAdd,
@@ -79,7 +72,7 @@ fun SearchScreen(
                             )
                         }
                     )
-                    Spacer(modifier = Modifier.height(PaddingSmall))
+                    Spacer(modifier = Modifier.height(PaddingMedium))
                 }
             }
         }

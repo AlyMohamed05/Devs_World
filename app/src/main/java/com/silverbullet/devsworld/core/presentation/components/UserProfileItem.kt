@@ -1,6 +1,5 @@
 package com.silverbullet.devsworld.core.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,19 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.silverbullet.devsworld.core.domain.model.User
-import com.silverbullet.devsworld.R
+import coil.compose.AsyncImage
+import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingSmall
 
 @Composable
 fun UserProfileItem(
     modifier: Modifier = Modifier,
     actionIcon: @Composable () -> Unit = {},
-    user: User,
+    profile: Profile,
     onItemClick: () -> Unit = {},
     onActionItemClick: () -> Unit = {}
 ) {
@@ -43,8 +41,8 @@ fun UserProfileItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.kermit),
+            AsyncImage(
+                model = profile.profileImageUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(75.dp)
@@ -58,13 +56,13 @@ fun UserProfileItem(
                     .weight(8f)
             ) {
                 Text(
-                    text = user.username,
+                    text = profile.username,
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(PaddingSmall))
                 Text(
-                    text = user.description,
+                    text = profile.bio,
                     style = MaterialTheme.typography.body2,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2

@@ -1,7 +1,7 @@
 package com.silverbullet.devsworld.feature_profile.data.mapper
 
-import com.silverbullet.devsworld.feature_profile.data.remote.dto.response.ProfileDto
-import com.silverbullet.devsworld.feature_profile.domain.model.Profile
+import com.silverbullet.devsworld.core.data.remote.dto.response.ProfileDto
+import com.silverbullet.devsworld.core.domain.model.Profile
 
 fun ProfileDto.toProfile(): Profile {
     return Profile(

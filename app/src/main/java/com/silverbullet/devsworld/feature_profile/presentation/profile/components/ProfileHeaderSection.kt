@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.silverbullet.devsworld.R
+import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingMedium
 import com.silverbullet.devsworld.core.presentation.ui.theme.ProfilePictureLarge
-import com.silverbullet.devsworld.feature_profile.domain.model.Profile
 
 @Composable
 fun ProfileHeaderSection(

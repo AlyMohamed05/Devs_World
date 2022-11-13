@@ -2,7 +2,7 @@ package com.silverbullet.devsworld.feature_profile.data.remote
 
 import com.silverbullet.devsworld.core.data.remote.dto.response.BasicApiResponse
 import com.silverbullet.devsworld.feature_profile.data.remote.dto.response.PostDto
-import com.silverbullet.devsworld.feature_profile.data.remote.dto.response.ProfileDto
+import com.silverbullet.devsworld.core.data.remote.dto.response.ProfileDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

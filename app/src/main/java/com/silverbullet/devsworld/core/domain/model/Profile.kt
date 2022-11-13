@@ -1,4 +1,4 @@
-package com.silverbullet.devsworld.feature_profile.domain.model
+package com.silverbullet.devsworld.core.domain.model
 
 data class Profile(
     val email: String,
