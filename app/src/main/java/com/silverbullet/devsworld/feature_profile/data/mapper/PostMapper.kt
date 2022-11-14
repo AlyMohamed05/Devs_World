@@ -5,11 +5,13 @@ import com.silverbullet.devsworld.feature_profile.data.remote.dto.response.PostD
 
 fun PostDto.toPost(): Post{
     return Post(
+        id = id,
         imageUrl = imageUrl,
         description = description,
         timestamp =  timestamp,
         userId = userId,
         username = username,
+        isLiked = isLiked,
         likesCount = likesCount,
         commentsCount = commentsCount
     )

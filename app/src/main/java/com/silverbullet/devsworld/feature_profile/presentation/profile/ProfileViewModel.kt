@@ -4,15 +4,19 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.silverbullet.devsworld.core.domain.repository.InteractionsRepository
 import com.silverbullet.devsworld.core.util.Resource
 import com.silverbullet.devsworld.feature_profile.domain.repository.ProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val interactionsRepository: InteractionsRepository
 ) : ViewModel() {
 
     private var userId: String? = null
@@ -30,8 +34,36 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun likePost(postId: String, like: Boolean) {
+        viewModelScope.launch {
+            if (like) {
+                // update the current posts list and modify the liked post like status,
+                // then send the request,
+                // in case the request has failed,revert the change in failure callback
+                launch { modifyPostIsLikedStatus(postId, true) }
+                interactionsRepository
+                    .likePost(
+                        postId,
+                        failureCallback = {
+                            modifyPostIsLikedStatus(postId, false)
+                        }
+                    )
+            } else {
+                // Remove like
+                launch { modifyPostIsLikedStatus(postId, false) }
+                interactionsRepository
+                    .unlikePost(
+                        postId,
+                        failureCallback = {
+                            modifyPostIsLikedStatus(postId, true)
+                        }
+                    )
+            }
+        }
+    }
+
     private suspend fun loadProfileInfo() {
-        repository
+        profileRepository
             .getProfile(userId)
             .collect { resource ->
                 when (resource) {
@@ -54,7 +86,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun loadProfilePosts() {
-        repository
+        profileRepository
             .getProfilePosts(userId = userId, page = page)
             .collect { resource ->
                 when (resource) {
@@ -70,5 +102,18 @@ class ProfileViewModel @Inject constructor(
                     is Resource.Loading -> Unit
                 }
             }
+    }
+
+    private suspend fun modifyPostIsLikedStatus(postId: String, likeStatus: Boolean) {
+        val newPostsList = withContext(Dispatchers.Default) {
+            _state.value.posts.map { post ->
+                if (post.id == postId) {
+                    post.copy(isLiked = likeStatus)
+                } else {
+                    post
+                }
+            }
+        }
+        _state.value = _state.value.copy(posts = newPostsList)
     }
 }

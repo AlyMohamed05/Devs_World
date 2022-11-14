@@ -33,7 +33,17 @@ fun PostDetailScreen(
     navController: NavController,
     viewModel: PostDetailViewModel = hiltViewModel()
 ) {
-    val post = Post("", "", 34, "df", "df", 3, 3)
+    val post = Post(
+        id = "",
+        "",
+        "",
+        34,
+        "df",
+        "df",
+        true,
+        3,
+        commentsCount = 33
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         StandardToolbar(
@@ -86,6 +96,7 @@ fun PostDetailScreen(
                                 ActionRow(
                                     username = post.username,
                                     modifier = Modifier.fillMaxWidth(),
+                                    isLiked = post.isLiked,
                                     onLikeClick = {
 
                                     },

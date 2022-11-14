@@ -42,7 +42,11 @@ fun Post(
     modifier: Modifier = Modifier,
     post: Post,
     showProfileImage: Boolean = true,
-    onPostClick: () -> Unit = {}
+    onPostClick: () -> Unit = {},
+    onUsernameClick: (String) -> Unit = {},
+    onLikeClick: (Boolean) -> Unit = {},
+    onCommentClick: () -> Unit = {},
+    onShareClick: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -66,7 +70,7 @@ fun Post(
                 model = post.imageUrl,
                 contentDescription = "Post Image",
                 modifier = Modifier
-                    .aspectRatio(16f/9f)
+                    .aspectRatio(16f / 9f)
                     .fillMaxWidth()
             )
             Column(
@@ -77,18 +81,11 @@ fun Post(
                 ActionRow(
                     username = post.username,
                     modifier = Modifier.fillMaxWidth(),
-                    onLikeClick = {
-
-                    },
-                    onCommentClick = {
-
-                    },
-                    onShareClick = {
-
-                    },
-                    onUsernameClick = {
-
-                    }
+                    isLiked = post.isLiked,
+                    onLikeClick = onLikeClick,
+                    onCommentClick = onCommentClick,
+                    onShareClick = onShareClick,
+                    onUsernameClick = onUsernameClick
                 )
                 Spacer(modifier = Modifier.height(PaddingSmall))
                 Text(
@@ -136,7 +133,7 @@ fun Post(
 @Composable
 fun EngagementButtons(
     modifier: Modifier = Modifier,
-    isLiked: Boolean = false,
+    isLiked: Boolean ,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
@@ -183,7 +180,7 @@ fun EngagementButtons(
 fun ActionRow(
     modifier: Modifier = Modifier,
     username: String,
-    isLiked: Boolean = false,
+    isLiked: Boolean,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
