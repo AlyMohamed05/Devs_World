@@ -20,9 +20,12 @@ interface PostApi {
 
     @GET("api/post/feed")
     suspend fun fetchFeed(
-        @Query("page") page: Int= 1,
+        @Query("page") page: Int = 1,
         @Query("offset") offset: Int? = null
     ): BasicApiResponse<List<PostDto>>
+
+    @GET("api/post")
+    suspend fun fetchPost(@Query("postId") postId: String): BasicApiResponse<PostDto>
 
     companion object {
 

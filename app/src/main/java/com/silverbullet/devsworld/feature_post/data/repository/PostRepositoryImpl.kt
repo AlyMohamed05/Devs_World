@@ -18,7 +18,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
 
 class PostRepositoryImpl(
@@ -69,11 +68,25 @@ class PostRepositoryImpl(
                 emit(Resource.Error(error = UiText.StringResource(R.string.unexpected_error)))
             }
         } catch (e: IOException) {
-            Timber.d(e.message)
             emit(Resource.Error(error = UiText.StringResource(R.string.cant_connect)))
         } catch (exception: HttpException) {
             emit(Resource.Error(error = UiText.StringResource(R.string.unexpected_error)))
         }
+    }
 
+    override suspend fun getPost(postId: String): Flow<Resource<Post>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = withContext(Dispatchers.IO) { api.fetchPost(postId) }
+            if (response.successful && response.data != null) {
+                emit(Resource.Success(response.data.toPost()))
+            } else {
+                emit(Resource.Error(error = UiText.StringResource(R.string.unexpected_error)))
+            }
+        } catch (e: IOException) {
+            emit(Resource.Error(error = UiText.StringResource(R.string.cant_connect)))
+        } catch (exception: HttpException) {
+            emit(Resource.Error(error = UiText.StringResource(R.string.unexpected_error)))
+        }
     }
 }

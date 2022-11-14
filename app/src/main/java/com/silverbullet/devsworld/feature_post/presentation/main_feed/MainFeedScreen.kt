@@ -54,7 +54,8 @@ fun MainFeedScreen(
                 items(viewModel.state.value.posts) { post ->
                     Post(
                         post = post,
-                        onLikeClick = { viewModel.likePost(post.id, !post.isLiked) }
+                        onLikeClick = { viewModel.likePost(post.id, !post.isLiked) },
+                        onPostClick = { navController.navigate(Screen.PostDetailScreen.route + "/${post.id}") }
                     )
                 }
             }

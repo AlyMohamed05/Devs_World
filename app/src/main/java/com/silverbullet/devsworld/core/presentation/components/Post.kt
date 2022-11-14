@@ -1,6 +1,5 @@
 package com.silverbullet.devsworld.core.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -118,8 +116,8 @@ fun Post(
 
         }
         if (showProfileImage) {
-            Image(
-                painter = painterResource(id = R.drawable.kermit),
+            AsyncImage(
+                model = post.profileImageUrl,
                 contentDescription = "Profile Picture",
                 modifier = Modifier
                     .clip(CircleShape)

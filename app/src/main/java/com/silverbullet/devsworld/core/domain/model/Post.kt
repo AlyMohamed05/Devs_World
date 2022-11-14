@@ -6,6 +6,7 @@ data class Post(
     val description: String,
     val timestamp: Long,
     val userId: String,
+    val profileImageUrl: String?,
     val username: String,
     val isLiked: Boolean,
     val likesCount: Long,

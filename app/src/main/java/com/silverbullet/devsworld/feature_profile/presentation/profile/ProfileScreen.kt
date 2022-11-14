@@ -63,7 +63,7 @@ fun ProfileScreen(
                         Post(
                             post = it,
                             onPostClick = {
-                                navController.navigate(Screen.PostDetailScreen.route)
+                                navController.navigate(Screen.PostDetailScreen.route + "/${it.id}")
                             },
                             onLikeClick = { isLiked -> viewModel.likePost(it.id, isLiked) },
                             showProfileImage = false,

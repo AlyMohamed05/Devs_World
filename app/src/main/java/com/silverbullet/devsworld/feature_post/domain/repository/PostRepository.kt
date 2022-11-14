@@ -17,4 +17,6 @@ interface PostRepository {
         page: Int = 1,
         offset: Int? = null
     ): Flow<Resource<List<Post>>>
+
+    suspend fun getPost(postId: String): Flow<Resource<Post>>
 }

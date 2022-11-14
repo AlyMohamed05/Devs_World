@@ -11,6 +11,7 @@ fun PostDto.toPost(): Post{
         timestamp =  timestamp,
         userId = userId,
         username = username,
+        profileImageUrl = profileImageUrl,
         isLiked = isLiked,
         likesCount = likesCount,
         commentsCount = commentsCount

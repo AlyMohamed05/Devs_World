@@ -2,8 +2,10 @@ package com.silverbullet.devsworld.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.silverbullet.devsworld.feature_activity.presentation.ActivityScreen
 import com.silverbullet.devsworld.feature_chat.presentation.ChatScreen
 import com.silverbullet.devsworld.feature_post.presentation.create_post.CreatePostScreen
@@ -50,7 +52,14 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
         }
 
         composable(
-            Screen.PostDetailScreen.route ) {
+            Screen.PostDetailScreen.route + "/{postId}",
+            arguments = listOf(
+                navArgument("postId"){
+                    type = NavType.StringType
+                    nullable = false
+                }
+            )
+        ) {
             PostDetailScreen(navController = navController)
         }
 
