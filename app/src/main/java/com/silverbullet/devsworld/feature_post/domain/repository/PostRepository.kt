@@ -1,6 +1,7 @@
 package com.silverbullet.devsworld.feature_post.domain.repository
 
 import android.net.Uri
+import com.silverbullet.devsworld.core.domain.model.Post
 import com.silverbullet.devsworld.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -11,4 +12,9 @@ interface PostRepository {
         description: String,
         filePath: Uri
     ): Flow<Resource<Unit>>
+
+    suspend fun getFeed(
+        page: Int = 1,
+        offset: Int? = null
+    ): Flow<Resource<List<Post>>>
 }
