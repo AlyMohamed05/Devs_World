@@ -5,17 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silverbullet.devsworld.core.domain.model.Profile
+import com.silverbullet.devsworld.core.domain.repository.InteractionsRepository
 import com.silverbullet.devsworld.core.util.Resource
 import com.silverbullet.devsworld.feature_search.domain.repository.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: SearchRepository
+    private val searchRepository: SearchRepository,
+    private val interactionsRepository: InteractionsRepository
 ) : ViewModel() {
 
     private val _searchText = mutableStateOf("")
@@ -36,11 +36,35 @@ class SearchViewModel @Inject constructor(
         search()
     }
 
+    fun sendFollowingRequest(userId: String, followingStatus: Boolean) {
+        viewModelScope.launch {
+            launch { modifyIsFollowedStatus(userId, followingStatus) }
+            if (followingStatus) {
+                interactionsRepository
+                    .follow(
+                        userId,
+                        failureCallback = {
+                            modifyIsFollowedStatus(userId, false)
+                        }
+                    )
+            } else {
+                // unfollow
+                interactionsRepository
+                    .unfollow(
+                        userId,
+                        failureCallback = {
+                            modifyIsFollowedStatus(userId, true)
+                        }
+                    )
+            }
+        }
+    }
+
     private fun search() {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500)
-            repository
+            searchRepository
                 .userSearch(query)
                 .collect { resource ->
                     when (resource) {
@@ -54,5 +78,18 @@ class SearchViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    private suspend fun modifyIsFollowedStatus(profileId: String, isFollowed: Boolean) {
+        val newProfileList =
+            withContext(Dispatchers.Default) {
+                _profilesList.value.map { profile ->
+                    if (profile.id == profileId)
+                        profile.copy(isFollowed = isFollowed)
+                    else
+                        profile
+                }
+            }
+        _profilesList.value = newProfileList
     }
 }

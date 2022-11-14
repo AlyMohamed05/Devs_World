@@ -108,7 +108,8 @@ class ProfileViewModel @Inject constructor(
         val newPostsList = withContext(Dispatchers.Default) {
             _state.value.posts.map { post ->
                 if (post.id == postId) {
-                    post.copy(isLiked = likeStatus)
+                    val likesCount = if (likeStatus) post.likesCount + 1 else post.likesCount - 1
+                    post.copy(isLiked = likeStatus, likesCount = likesCount)
                 } else {
                     post
                 }

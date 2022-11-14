@@ -5,10 +5,12 @@ import com.silverbullet.devsworld.core.domain.model.Profile
 
 fun ProfileDto.toProfile(): Profile {
     return Profile(
+        id = id,
         email = email,
         username = username,
         bio = bio,
         isOwnProfile = isOwnProfile,
+        isFollowed = isFollowed,
         followingCount = followingCount,
         followersCount = followersCount,
         postsCount = postsCount,

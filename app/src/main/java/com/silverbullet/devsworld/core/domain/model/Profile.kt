@@ -1,10 +1,12 @@
 package com.silverbullet.devsworld.core.domain.model
 
 data class Profile(
+    val id: String,
     val email: String,
     val username: String,
     val bio: String,
     val isOwnProfile: Boolean,
+    val isFollowed: Boolean?,
     val followingCount: Int,
     val followersCount: Int,
     val postsCount: Int,

@@ -7,7 +7,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.PersonRemove
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -66,10 +68,19 @@ fun SearchScreen(
                         profile = it,
                         actionIcon = {
                             Icon(
-                                imageVector = Icons.Default.PersonAdd,
+                                imageVector = if (it.isFollowed != null && it.isFollowed == false)
+                                    Icons.Default.PersonAdd
+                                else if (it.isFollowed != null && it.isFollowed == true)
+                                    Icons.Default.PersonRemove
+                                else
+                                    Icons.Default.Person,
                                 contentDescription = null,
                                 modifier = Modifier.size(IconSizeMedium)
                             )
+                        },
+                        onActionItemClick = { profile ->
+                            val followingStatus = profile.isFollowed?.not() ?: false
+                            viewModel.sendFollowingRequest(profile.id, followingStatus)
                         }
                     )
                     Spacer(modifier = Modifier.height(PaddingMedium))

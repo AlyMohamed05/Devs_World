@@ -1,10 +1,12 @@
 package com.silverbullet.devsworld.core.data.remote.dto.response
 
 data class ProfileDto(
+    val id: String,
     val email: String,
     val username: String,
     val bio: String = "",
     val isOwnProfile: Boolean,
+    val isFollowed: Boolean?,
     val followingCount: Int,
     val followersCount: Int,
     val postsCount: Int,

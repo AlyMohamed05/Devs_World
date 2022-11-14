@@ -24,7 +24,7 @@ fun UserProfileItem(
     actionIcon: @Composable () -> Unit = {},
     profile: Profile,
     onItemClick: () -> Unit = {},
-    onActionItemClick: () -> Unit = {}
+    onActionItemClick: (Profile) -> Unit = {}
 ) {
     Card(
         modifier = modifier
@@ -69,7 +69,7 @@ fun UserProfileItem(
                 )
             }
             IconButton(
-                onClick = onActionItemClick,
+                onClick = { onActionItemClick(profile) },
                 modifier = Modifier
                     .weight(2f)
             ) {
