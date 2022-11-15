@@ -2,6 +2,7 @@ package com.silverbullet.devsworld.feature_profile.presentation.edit_profile.com
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,12 +17,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.silverbullet.devsworld.core.presentation.ui.theme.ProfilePictureLarge
 
 @Composable
 fun BannerEditSection(
     bannerImage: Painter,
-    profileImage: Painter,
+    profileImageSource: Any?,
     profilePictureSize: Dp = ProfilePictureLarge,
     onBannerClick: () -> Unit = {},
     onProfileImageClick: () -> Unit = {}
@@ -39,13 +41,14 @@ fun BannerEditSection(
                 .fillMaxWidth()
                 .height(bannerHeight)
         )
-        Image(
-            painter = profileImage,
+        AsyncImage(
+            model  = profileImageSource,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .size(profilePictureSize)
                 .clip(CircleShape)
+                .clickable { onProfileImageClick() }
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colors.onSurface,

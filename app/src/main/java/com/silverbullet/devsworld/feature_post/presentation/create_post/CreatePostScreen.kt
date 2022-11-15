@@ -47,7 +47,10 @@ fun CreatePostScreen(
                     LocalContext.current.cacheDir,
                     UUID.randomUUID().toString()
                 )
-            )
+            ),
+            configure = {
+                withAspectRatio(16f, 9f)
+            }
         )
     ) {
         it?.let { uri ->

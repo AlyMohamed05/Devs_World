@@ -7,15 +7,14 @@ import androidx.activity.result.contract.ActivityResultContract
 import com.yalantis.ucrop.UCrop
 
 class CropActivityResultContract(
-    private val destinationUri: Uri
+    private val destinationUri: Uri,
+    private val configure: UCrop.() -> UCrop
 ) : ActivityResultContract<Uri, Uri?>() {
-
-    //TODO: Add a way to configure crop options
 
     override fun createIntent(context: Context, input: Uri): Intent {
         return UCrop
             .of(input, destinationUri)
-            .withAspectRatio(16f, 9f)
+            .configure()
             .getIntent(context)
     }
 

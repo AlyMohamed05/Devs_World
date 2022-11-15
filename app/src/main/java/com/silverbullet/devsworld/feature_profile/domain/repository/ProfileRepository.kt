@@ -1,5 +1,6 @@
 package com.silverbullet.devsworld.feature_profile.domain.repository
 
+import android.net.Uri
 import com.silverbullet.devsworld.core.domain.model.Post
 import com.silverbullet.devsworld.core.domain.model.Profile
 import com.silverbullet.devsworld.core.util.Resource
@@ -14,5 +15,15 @@ interface ProfileRepository {
         page: Int = 1,
         offset: Int? = null
     ): Flow<Resource<List<Post>>>
+
+    suspend fun updateProfile(
+        username: String,
+        githubUrl: String,
+        linkedinUrl: String,
+        instagramUrl: String,
+        bio: String,
+        skills: List<String>,
+        profileImageUri: Uri?
+    ): Flow<Resource<Unit>>
 
 }

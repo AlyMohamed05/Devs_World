@@ -1,5 +1,6 @@
 package com.silverbullet.devsworld.di
 
+import com.google.gson.Gson
 import com.silverbullet.devsworld.feature_profile.data.remote.ProfileApi
 import com.silverbullet.devsworld.feature_profile.data.repository.ProfileRepositoryImpl
 import com.silverbullet.devsworld.feature_profile.domain.repository.ProfileRepository
@@ -30,7 +31,7 @@ class ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileApi: ProfileApi): ProfileRepository {
-        return ProfileRepositoryImpl(profileApi)
+    fun provideProfileRepository(profileApi: ProfileApi,gson: Gson): ProfileRepository {
+        return ProfileRepositoryImpl(profileApi,gson)
     }
 }

@@ -1,5 +1,8 @@
 package com.silverbullet.devsworld.feature_profile.presentation.edit_profile
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +17,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -29,6 +33,9 @@ import com.silverbullet.devsworld.feature_profile.presentation.edit_profile.comp
 import com.silverbullet.devsworld.feature_profile.presentation.edit_profile.components.SkillsSelector
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingLarge
 import com.silverbullet.devsworld.core.presentation.ui.theme.PaddingSmall
+import com.silverbullet.devsworld.core.presentation.util.CropActivityResultContract
+import java.io.File
+import java.util.*
 
 @Composable
 fun EditProfileScreen(
@@ -36,6 +43,34 @@ fun EditProfileScreen(
     viewModel: EditProfileViewModel = hiltViewModel(),
     profilePictureSize: Dp = ProfilePictureLarge
 ) {
+    val cropActivityLauncher = rememberLauncherForActivityResult(
+        contract = CropActivityResultContract(
+            Uri.fromFile(
+                File(
+                    LocalContext.current.cacheDir,
+                    UUID.randomUUID().toString()
+                )
+            ),
+            configure = {
+                withAspectRatio(1f, 1f)
+            }
+        )
+    ) {
+        it?.let { uri ->
+            viewModel.onEvent(
+                EditProfileScreenEvents.EditProfileImage(uri)
+            )
+        }
+    }
+    val pickImageLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent()
+        ) {
+            it?.let { uri ->
+                cropActivityLauncher.launch(uri)
+            }
+        }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +86,9 @@ fun EditProfileScreen(
                 )
             },
             navActions = {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    viewModel.onEvent(EditProfileScreenEvents.Submit)
+                }) {
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = stringResource(id = R.string.save_chagnes),
@@ -66,8 +103,12 @@ fun EditProfileScreen(
                 .verticalScroll(state = rememberScrollState())
         ) {
             BannerEditSection(
+                profileImageSource = viewModel.profileImageUri.value
+                    ?: viewModel.profileImageUrl.value,
+                onProfileImageClick = {
+                    pickImageLauncher.launch("image/jpg")
+                },
                 bannerImage = painterResource(id = R.drawable.art),
-                profileImage = painterResource(id = R.drawable.kermit),
                 profilePictureSize = profilePictureSize
             )
             Column(
@@ -83,7 +124,6 @@ fun EditProfileScreen(
                     singleLine = true,
                     text = viewModel.usernameText.value,
                     hint = stringResource(id = R.string.username_hint),
-                    error = viewModel.usernameError.value,
                     onValueChange = { username ->
                         viewModel.onEvent(
                             EditProfileScreenEvents.EditUsernameField(username)
